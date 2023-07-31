@@ -1,11 +1,16 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-export const db = async () => {
+const url: string = `mongodb+srv://mateus:${process.env.PASSWORD}@universitycluster.ysd21q8.mongodb.net/?retryWrites=true&w=majority`;
+const options: object = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  };
+export const dbConnection = async () => {
     try {
-       //await mongoose.connect();
-       console.log('Connect to database!')
+        await mongoose.connect(url, options);
+        console.log('Database connected!')
     }
-    catch (error) {
-        console.log('Error:' + error);
+    catch(err) {
+        console.log('Erro: ' + err);
     }
 }
