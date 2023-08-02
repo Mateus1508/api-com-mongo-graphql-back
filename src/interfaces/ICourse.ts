@@ -1,9 +1,10 @@
 import { IStudent } from "./IStudent";
 
-export interface ICurse {
-    id: string;
+export interface ICourse {
+    id?: string;
     name: string;
+    institution: string;
     description: string;
-    durationHours: Date;
+    durationHours: Number;
     students?: IStudent[];
 }

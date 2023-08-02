@@ -1,21 +1,28 @@
 import { Field, ID, ObjectType } from "type-graphql";
-import { ICurse } from "../interfaces/ICurse";
+import { ICourse } from "../interfaces/ICourse";
 import { IStudent } from "../interfaces/IStudent";
+import Course from "./Course";
 
 @ObjectType()
 class Student implements IStudent {
 
-    @Field(type => ID, {nullable: true})
+    @Field(() => ID)
     id: string;
 
     @Field()
     name: string;
-
+    
+    @Field()
+    email: string;
+    
     @Field()
     age: number;
 
-    @Field({nullable: true})
-    curses?: ICurse[];
+    @Field(() => [Course])
+    courses?: ICourse[];
+
+    @Field(() => [ID],  { nullable: true })
+    coursesId?: string[];
 
 }
 

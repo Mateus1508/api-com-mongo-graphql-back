@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 
-const url: string = `mongodb+srv://mateus:${process.env.PASSWORD}@universitycluster.ysd21q8.mongodb.net/?retryWrites=true&w=majority`;
 const options: object = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  };
-export const dbConnection = async () => {
+};
+
+export const dbConnection = async (PASSWORD: string) => {
+    const url: string = `mongodb+srv://mateus:${PASSWORD}@universitycluster.ysd21q8.mongodb.net/?retryWrites=true&w=majority`;
     try {
         await mongoose.connect(url, options);
         console.log('Database connected!')

@@ -1,8 +1,9 @@
-import { ICurse } from "./ICurse";
+import { ICourse } from "./ICourse";
 
 export interface IStudent {
-    id: string;
+    id?: string;
     name: string;
+    email: string;
     age: number;
-    curses?: ICurse[];
+    courses?: ICourse[];
 }
