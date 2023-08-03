@@ -1,6 +1,4 @@
 import { Field, ID, InputType } from "type-graphql";
-import Student from "../../schemas/Student";
-import { IStudent } from "../../interfaces/IStudent";
 
 @InputType()
 export class CreateCourseInput {

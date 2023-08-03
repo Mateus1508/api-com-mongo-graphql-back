@@ -6,6 +6,8 @@ import { ICourse } from "../interfaces/ICourse";
 import CourseResolver from "./CourseResolver";
 import CourseModel from "../models/CourseModel";
 import mongoose from "mongoose";
+import { ApolloError } from "apollo-server";
+import { EditStudentInput } from "../dtos/inputs/editStudentInput";
 
 @Resolver(() => Student)
 class StudentResolver {
@@ -14,6 +16,13 @@ class StudentResolver {
     async findStudents() {
         const students = await StudentModel.find().populate('courses').exec();
         return students;
+    }
+
+    @Query(() => Student, { name: 'getStudentById' })
+    async getStudentById(@Arg('id', () => ID) id: string[]) {
+        const studentId = id.map((id) => new mongoose.Types.ObjectId(id));
+        const student = await StudentModel.find({ _id: studentId }).exec();
+        return student;
     }
     
     @Mutation(() => [Student], {name: 'createStudent'})
@@ -56,10 +65,18 @@ class StudentResolver {
         return student;
     }
 
-    @Query(() => Student, { name: 'getStudentById' })
-    async getStudentById(@Arg('id', () => ID) id: string[]) {
-        const studentId = id.map((id) => new mongoose.Types.ObjectId(id));
-        const student = await StudentModel.find({ _id: studentId }).exec();
+    @Mutation(() => Student)
+    async updateStudent(@Arg('id') id: string, @Arg('data') data: EditStudentInput) {
+        const student = await StudentModel.findByIdAndUpdate(id, data, { new: true });
+        return student;
+  }
+
+    @Mutation(() => Student)
+    async deleteStudentById(@Arg('id', () => ID) id: string) {
+        const student = await StudentModel.findByIdAndDelete(id);
+        if (student === null || student === undefined) {
+            throw new ApolloError("Student not found!")
+        }
         return student;
     }
 }

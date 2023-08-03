@@ -14,7 +14,7 @@ dbConnection(PASSWORD);
 const app = async () => {
 
 
-    const schema = await buildSchema({
+     const schema = await buildSchema({
         resolvers: [CourseResolver, StudentResolver],
         validate: false,
     })
